@@ -1,6 +1,7 @@
 import os
 import requests
 import time
+import datetime
 
 # Telegram-Bot Daten aus Environment Variables
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -9,6 +10,10 @@ CHAT_ID = os.getenv("CHAT_ID")
 # DexScreener API für deinen Token
 API_URL = "https://api.dexscreener.com/token-pairs/v1/solana/UKbXwN3ySC2jP5p9TyQ91yXYXmnnDsjiZQ55QCqpump"
 
+def log_price(price, change_24h):
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[{timestamp}] Preis: ${price}, Änderung: ${change_24h}")
+    
 def send_alert(message: str):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {"chat_id": CHAT_ID, "text": message}
@@ -34,6 +39,7 @@ def check_token():
             change_24h = pair.get("priceChange", {}).get("h24")
             if change_24h is not None and float(change_24h) > 100:
                 price = pair.get("priceUsd", "?")
+                log_price(price,change_24h)
                 send_alert(
                     f"🚀 Token {pair['baseToken']['symbol']} hat in 24h +{change_24h:.1f}% erreicht! "
                     f"Aktueller Preis: ${price}"
@@ -45,3 +51,4 @@ def check_token():
 if __name__ == "__main__":
 
     check_token()
+
