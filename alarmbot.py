@@ -3,14 +3,10 @@ import requests
 import time
 import datetime
 
-print("Script gestartet ✅")
-
 # Telegram-Bot Daten aus Environment Variables
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
-print("BOT_TOKEN:", BOT_TOKEN is not None)
-print("CHAT_ID:", CHAT_ID)
 # DexScreener API für deinen Token
 API_URL = "https://api.dexscreener.com/token-pairs/v1/solana/UKbXwN3ySC2jP5p9TyQ91yXYXmnnDsjiZQ55QCqpump"
 
@@ -55,6 +51,7 @@ def check_token():
 if __name__ == "__main__":
 
     check_token()
+
 
 
 
