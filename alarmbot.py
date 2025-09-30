@@ -37,9 +37,9 @@ def check_token():
         for pair in pairs:
             # Preisänderung in den letzten 24h
             change_24h = pair.get("priceChange", {}).get("h24")
+            price = pair.get("priceUsd", "?")
+            log_price(price,change_24h)
             if change_24h is not None and float(change_24h) > 100:
-                price = pair.get("priceUsd", "?")
-                log_price(price,change_24h)
                 send_alert(
                     f"🚀 Token {pair['baseToken']['symbol']} hat in 24h +{change_24h:.1f}% erreicht! "
                     f"Aktueller Preis: ${price}"
@@ -51,4 +51,5 @@ def check_token():
 if __name__ == "__main__":
 
     check_token()
+
 
