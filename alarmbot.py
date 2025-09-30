@@ -12,7 +12,7 @@ API_URL = "https://api.dexscreener.com/token-pairs/v1/solana/UKbXwN3ySC2jP5p9TyQ
 
 def log_price(price, change_24h):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"[{timestamp}] Preis: ${price}, Änderung: ${change_24h}")
+    print(f"[{timestamp}] Preis: ${price}, Änderung: {change_24h}%")
     
 def send_alert(message: str):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
@@ -51,5 +51,6 @@ def check_token():
 if __name__ == "__main__":
 
     check_token()
+
 
 
