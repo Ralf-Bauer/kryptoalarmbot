@@ -22,16 +22,26 @@ def check_token():
     try:
         r = requests.get(API_URL, timeout=10)
         data = r.json()
-        for pair in data.get("pairs", []):
-            change_24h = None
-            if "priceChange" in pair and isinstance(pair["priceChange"], dict):
-                change_24h = pair["priceChange"].get("24h")
-            if change_24h is not None:
-                if float(change_24h) > 100:
-                    price = pair.get("priceUsd", "?")
-                    send_alert(f"🚀 Token hat in 24h +{change_24h:.1f}% erreicht! Preis: ${price}")
+
+        # data ist eine Liste mit mindestens einem Pair
+        if isinstance(data, list):
+            pairs = data
+        else:
+            pairs = data.get("pairs", [])
+
+        for pair in pairs:
+            # Preisänderung in den letzten 24h
+            change_24h = pair.get("priceChange", {}).get("h24")
+            if change_24h is not None and float(change_24h) > 100:
+                price = pair.get("priceUsd", "?")
+                send_alert(
+                    f"🚀 Token {pair['baseToken']['symbol']} hat in 24h +{change_24h:.1f}% erreicht! "
+                    f"Aktueller Preis: ${price}"
+                )
+
     except Exception as e:
         print("❌ Fehler bei API-Abfrage:", e)
 
 if __name__ == "__main__":
+
     check_token()
