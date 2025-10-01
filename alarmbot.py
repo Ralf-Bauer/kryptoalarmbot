@@ -24,7 +24,7 @@ def already_sent_today() -> bool:
         return False
     return False
 
-   def set_alert_now():
+def set_alert_now():
     with open(ALERT_FILE, "w") as f:
         f.write(datetime.utcnow().isoformat()) 
         
@@ -72,6 +72,7 @@ def check_token():
 if __name__ == "__main__":
 
     check_token()
+
 
 
 
