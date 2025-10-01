@@ -1,7 +1,7 @@
 import os
 import requests
 import time
-import datetime, timedelta
+import datetime
 
 # Telegram-Bot Daten aus Environment Variables
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -16,14 +16,14 @@ def already_sent_today() -> bool:
         return False
     
   try:
-        with open(ALERT_FILE, "r") as f:
-            last_str = f.read().strip()
-            last_time = datetime.fromisoformat(last_str)
-            if datetime.utcnow() - last_time < timedelta(hours=24):
-                return True
-    except:
-        return False
+    with open(ALERT_FILE, "r") as f:
+      last_str = f.read().strip()
+      last_time = datetime.fromisoformat(last_str)
+      if datetime.utcnow() - last_time < timedelta(hours=24):
+        return True
+  except:
     return False
+  return False
 
 def set_alert_now():
     with open(ALERT_FILE, "w") as f:
@@ -73,6 +73,7 @@ def check_token():
 if __name__ == "__main__":
 
     check_token()
+
 
 
 
