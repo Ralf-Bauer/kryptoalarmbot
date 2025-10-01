@@ -14,7 +14,8 @@ API_URL = "https://api.dexscreener.com/token-pairs/v1/solana/UKbXwN3ySC2jP5p9TyQ
 def already_sent_today() -> bool:
   if not os.path.exists(ALERT_FILE):
         return False
-    try:
+    
+  try:
         with open(ALERT_FILE, "r") as f:
             last_str = f.read().strip()
             last_time = datetime.fromisoformat(last_str)
@@ -72,6 +73,7 @@ def check_token():
 if __name__ == "__main__":
 
     check_token()
+
 
 
 
