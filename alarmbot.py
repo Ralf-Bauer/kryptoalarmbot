@@ -18,8 +18,8 @@ def already_sent_today() -> bool:
   try:
     with open(ALERT_FILE, "r") as f:
       last_str = f.read().strip()
-      last_time = datetime.fromisoformat(last_str)
-      if datetime.utcnow() - last_time < timedelta(hours=24):
+      last_time = datetime.datetime.fromisoformat(last_str)
+      if datetime.datetime.utcnow() - last_time < datetime.timedelta(hours=24):
         return True
   except:
     return False
@@ -27,7 +27,7 @@ def already_sent_today() -> bool:
 
 def set_alert_now():
     with open(ALERT_FILE, "w") as f:
-        f.write(datetime.utcnow().isoformat()) 
+        f.write(datetime.datetime.utcnow().isoformat()) 
         
 def log_price(price, change_24h):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -73,6 +73,7 @@ def check_token():
 if __name__ == "__main__":
 
     check_token()
+
 
 
 
