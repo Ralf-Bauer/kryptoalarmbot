@@ -12,7 +12,9 @@ jobs:
     steps:
       # Repo auschecken
       - uses: actions/checkout@v4
-
+        with:
+          persist-credentials: false
+        
       # Python-Abhängigkeiten installieren
       - name: Install dependencies
         run: |
