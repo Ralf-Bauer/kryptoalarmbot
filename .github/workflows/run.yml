@@ -1,34 +1,40 @@
-# Datei: .github/workflows/run.yml
 name: Run Python Script Every 4 Minutes
 
 on:
   schedule:
     - cron: "*/4 * * * *"  # alle 4 Minuten
-  workflow_dispatch:        # erlaubt manuelles Starten über GitHub UI
+  workflow_dispatch:        # optional für manuelles Ausführen
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
 
     steps:
+      # Repo auschecken
       - uses: actions/checkout@v4
 
+      # Git automatisch konfigurieren
+      - uses: actions/setup-git@v3
+
+      # Python-Abhängigkeiten installieren
       - name: Install dependencies
         run: |
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
 
-      - name: Run Python Script and update log
+      # Python-Script ausführen
+      - name: Run Python Script
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
           TOKEN_ID: ${{ secrets.TOKEN_ID }}
         run: |
-          echo "=== Run at $(date -u) ==="
-          python alarmbot.py
+          python your_script.py
 
-          # Datei aktualisieren & committen
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
+      # last_alert.txt committen & pushen
+      - name: Commit and push last_alert.txt
+        run: |
           git add last_alert.txt
           git commit -m "Update alert state $(date -u)" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
