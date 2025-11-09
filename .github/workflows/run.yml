@@ -13,9 +13,6 @@ jobs:
       # Repo auschecken
       - uses: actions/checkout@v4
 
-      # Git automatisch konfigurieren
-      - uses: actions/setup-git@v3
-
       # Python-Abhängigkeiten installieren
       - name: Install dependencies
         run: |
