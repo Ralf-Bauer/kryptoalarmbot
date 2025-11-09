@@ -27,7 +27,7 @@ jobs:
           CHAT_ID: ${{ secrets.CHAT_ID }}
           TOKEN_ID: ${{ secrets.TOKEN_ID }}
         run: |
-          python your_script.py
+          python alarmbot.py
 
       # last_alert.txt committen & pushen
       - name: Commit and push last_alert.txt
