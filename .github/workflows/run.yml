@@ -2,7 +2,7 @@ name: Run Python Script Every 4 Minutes
 
 on:
   schedule:
-    - cron: "*/4 * * * *"  # alle 4 Minuten
+    - cron: "*/5 * * * *"  # alle 4 Minuten
   workflow_dispatch:        # optional für manuelles Ausführen
 
 jobs:
